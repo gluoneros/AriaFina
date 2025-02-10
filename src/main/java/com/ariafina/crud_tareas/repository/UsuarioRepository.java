@@ -1,4 +1,10 @@
 package com.ariafina.crud_tareas.repository;
 
-public class UsuarioRepository {
+import com.ariafina.crud_tareas.model.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 }
+

@@ -1,4 +1,6 @@
 package com.ariafina.crud_tareas.model;
 
-public class Dependencia {
+
+public enum Dependencia {
+    CONSULTORIA, FABRICA, DESARROLLO
 }

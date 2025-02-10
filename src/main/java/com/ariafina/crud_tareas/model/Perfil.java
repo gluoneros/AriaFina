@@ -1,4 +1,8 @@
 package com.ariafina.crud_tareas.model;
 
-public class Perfil {
+
+public enum Perfil {
+    ADMINISTRADOR,
+    CONSULTA,
+    OPERADOR
 }
