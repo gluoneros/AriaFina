@@ -8,32 +8,48 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.ariafina.crud_tareas.repository.TareaRepository.*;
-
 @Service
 public class TareaService {
 
     @Autowired
     private TareaRepository tareaRepository;
 
+    // Obtener todas las tareas
     public List<Tarea> obtenerTodas() {
         return tareaRepository.findAll();
     }
 
-    public static Optional<Tarea> obtenerPorId(Integer id) {
-        Optional<Tarea> byNombre = TareaRepository.findByNombre(String.valueOf(id));
-        return byNombre;
+    // Obtener una tarea por ID
+    public Optional<Tarea> obtenerPorId(Integer id) {
+        return tareaRepository.findById(id);
     }
 
-    public Optional<Tarea> obtenerPorNombre(String nombre) {
-        return tareaRepository.findByNombre(nombre);
-    }
-
+    // Guardar una nueva tarea
     public Tarea guardar(Tarea tarea) {
         return tareaRepository.save(tarea);
     }
 
+    // Actualizar una tarea existente
+    public Tarea actualizar(Integer id, Tarea tarea) {
+        if (tareaRepository.existsById(id)) {
+            tarea.setId(id); // Asegura que se actualiza la tarea con el ID correcto
+            return tareaRepository.save(tarea);
+        } else {
+            throw new RuntimeException("Tarea con ID " + id + " no encontrada.");
+        }
+    }
+
+    // Eliminar una tarea por ID
     public void eliminar(Integer id) {
-        tareaRepository.deleteById(id);
+        if (tareaRepository.existsById(id)) {
+            tareaRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Tarea con ID " + id + " no encontrada.");
+        }
+    }
+
+    // Buscar una tarea por nombre
+    public Optional<Tarea> obtenerPorNombre(String nombre) {
+        return tareaRepository.findByNombre(nombre);
     }
 }

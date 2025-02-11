@@ -2,8 +2,8 @@ package com.ariafina.crud_tareas.model;
 
 import jakarta.persistence.*;
 
+
 @Entity
-@Table(name = "tareas")
 public class Tarea {
 
     @Id

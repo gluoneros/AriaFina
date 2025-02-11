@@ -3,50 +3,45 @@ package com.ariafina.crud_tareas.controller;
 import com.ariafina.crud_tareas.model.Tarea;
 import com.ariafina.crud_tareas.service.TareaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/tareas")
+@RequestMapping("/tareas")
 public class TareaController {
 
     @Autowired
-    private TareaService TareaService;
+    private TareaService tareaService;
 
+    // Obtener todas las tareas
     @GetMapping
     public List<Tarea> listarTareas() {
-        return TareaService.obtenerTodas();
+        return tareaService.obtenerTodas();
     }
 
+    // Obtener una tarea por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Tarea> obtenerTodas(@PathVariable Integer id) {
-        Optional<Tarea> tarea = com.ariafina.crud_tareas.service.TareaService.obtenerPorId(id);
-        return tarea.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public Optional<Tarea> obtenerTareaPorId(@PathVariable Integer id) {
+        return tareaService.obtenerPorId(id);
     }
 
+    // Crear una nueva tarea
     @PostMapping
     public Tarea crearTarea(@RequestBody Tarea tarea) {
-        return TareaService.guardar(tarea);
+        return tareaService.guardar(tarea);
     }
 
+    // Actualizar una tarea existente
     @PutMapping("/{id}")
-    public ResponseEntity<Tarea> actualizarTarea(@PathVariable Integer id, @RequestBody Tarea tarea) {
-        if (!TareaService.obtenerPorId(id).isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        tarea.setId(id);
-        return ResponseEntity.ok(TareaService.guardar(tarea));
+    public Tarea actualizarTarea(@PathVariable Integer id, @RequestBody Tarea tarea) {
+        return tareaService.actualizar(id, tarea);
     }
 
+    // Eliminar una tarea por ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
-        if (!TareaService.obtenerPorId(id).isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        TareaService.eliminar(id);
-        return ResponseEntity.noContent().build();
+    public void eliminarTarea(@PathVariable Integer id) {
+        tareaService.eliminar(id);
     }
 }
