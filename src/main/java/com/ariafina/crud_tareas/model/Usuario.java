@@ -1,6 +1,9 @@
 package com.ariafina.crud_tareas.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import java.util.Date;
 import java.util.List;
 
@@ -12,16 +15,20 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull(message = "La fecha de nacimiento es obligatoria.")
+    @Past(message = "La fecha de nacimiento debe ser en el pasado.")
     @Column(name = "fecha_nacimiento", nullable = false)
     private Date fechaNacimiento;
 
     @Column(nullable = false)
     private Boolean activo;
 
+    @NotNull(message = "La dependencia es obligatoria.")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Dependencia dependencia;
 
+    @NotNull(message = "El perfil es obligatorio.")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Perfil perfil;

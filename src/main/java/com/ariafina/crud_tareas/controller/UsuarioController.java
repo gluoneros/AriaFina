@@ -2,15 +2,15 @@ package com.ariafina.crud_tareas.controller;
 
 import com.ariafina.crud_tareas.model.Usuario;
 import com.ariafina.crud_tareas.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/usuarios")
 public class UsuarioController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public Usuario crearUsuario(@RequestBody Usuario usuario) {
+    public Usuario crearUsuario(@Valid @RequestBody Usuario usuario) {
         return usuarioService.guardar(usuario);
     }
 

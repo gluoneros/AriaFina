@@ -2,6 +2,7 @@ package com.ariafina.crud_tareas.controller;
 
 import com.ariafina.crud_tareas.model.Tarea;
 import com.ariafina.crud_tareas.service.TareaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,13 +30,13 @@ public class TareaController {
 
     // Crear una nueva tarea
     @PostMapping
-    public Tarea crearTarea(@RequestBody Tarea tarea) {
+    public Tarea crearTarea(@Valid @RequestBody Tarea tarea) {
         return tareaService.guardar(tarea);
     }
 
     // Actualizar una tarea existente
     @PutMapping("/{id}")
-    public Tarea actualizarTarea(@PathVariable Integer id, @RequestBody Tarea tarea) {
+    public Tarea actualizarTarea(@PathVariable Integer id, @Valid @RequestBody Tarea tarea) {
         return tareaService.actualizar(id, tarea);
     }
 

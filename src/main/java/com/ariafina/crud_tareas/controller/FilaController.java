@@ -2,6 +2,7 @@ package com.ariafina.crud_tareas.controller;
 
 import com.ariafina.crud_tareas.model.Tarea;
 import com.ariafina.crud_tareas.service.TareaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,12 +29,12 @@ public class FilaController {
     }
 
     @PostMapping
-    public Tarea crearTarea(@RequestBody Tarea tarea) {
+    public Tarea crearTarea(@Valid @RequestBody Tarea tarea) {
         return tareaService.guardar(tarea);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tarea> actualizarTarea(@PathVariable Integer id, @RequestBody Tarea tarea) {
+    public ResponseEntity<Tarea> actualizarTarea(@PathVariable Integer id, @Valid @RequestBody Tarea tarea) {
         if (!tareaService.obtenerPorId(id).isPresent()) {
             return ResponseEntity.notFound().build();
         }

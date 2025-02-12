@@ -1,7 +1,7 @@
 package com.ariafina.crud_tareas.model;
 
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Tarea {
@@ -10,7 +10,8 @@ public class Tarea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank(message = "El nombre de la tarea no puede estar vacío.")
+    @Size(max = 100, message = "El nombre de la tarea no puede superar los 100 caracteres.")
     private String nombre;
 
     public Tarea() {}
