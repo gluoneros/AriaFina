@@ -2,6 +2,8 @@ package com.ariafina.crud_tareas.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "filas")
@@ -11,12 +13,12 @@ public class Fila {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message = "La tarea es obligatoria.")
-    @Min(value = 1, message = "El ID de la tarea debe ser mayor a 0.")
+    @NotNull(message = "La tarea no puede estar vacía.")
+    @Min(value = 1, message = "La tarea debe tener un valor mayor a 0.")
     private Integer tarea;
 
-    @NotNull(message = "La duración es obligatoria.")
-    @Min(value = 1, message = "La duración debe ser mayor a 0.")
+    @NotNull(message = "La duración no puede estar vacía.")
+    @Min(value = 1, message = "La duración debe ser al menos 1 minuto.")
     private Integer duracion;
 
     @ManyToOne

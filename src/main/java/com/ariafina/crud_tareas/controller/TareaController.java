@@ -1,5 +1,16 @@
 package com.ariafina.crud_tareas.controller;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.Optional;
+
+import java.util.Map;
+import java.util.HashMap;
+import org.springframework.validation.FieldError;
+import org.springframework.http.HttpStatus;
+
 import com.ariafina.crud_tareas.model.Tarea;
 import com.ariafina.crud_tareas.service.TareaService;
 import jakarta.validation.Valid;
@@ -10,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/tareas")
+@RequestMapping("/api/tareas")
 public class TareaController {
 
     @Autowired
@@ -24,14 +35,25 @@ public class TareaController {
 
     // Obtener una tarea por ID
     @GetMapping("/{id}")
-    public Optional<Tarea> obtenerTareaPorId(@PathVariable Integer id) {
-        return tareaService.obtenerPorId(id);
+    public ResponseEntity<?> obtenerTareaPorId(@PathVariable Integer id) {
+        return tareaService.obtenerPorId(id)
+                .map(tarea -> ResponseEntity.ok(tarea))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body((Tarea) Map.of("error", "No se encontró la tarea con ID " + id)));
     }
 
     // Crear una nueva tarea
     @PostMapping
-    public Tarea crearTarea(@Valid @RequestBody Tarea tarea) {
-        return tareaService.guardar(tarea);
+    public ResponseEntity<?> crearTarea(@Valid @RequestBody Tarea tarea, BindingResult result) {
+        if (result.hasErrors()) {
+            Map<String, String> errores = new HashMap<>();
+            for (FieldError error : result.getFieldErrors()) {
+                errores.put(error.getField(), error.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errores);
+        }
+        Tarea nuevaTarea = tareaService.guardar(tarea);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaTarea);
     }
 
     // Actualizar una tarea existente

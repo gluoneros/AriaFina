@@ -33,7 +33,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Integer id,@Valid @RequestBody Usuario usuario) {
         if (!usuarioService.obtenerPorId(id).isPresent()) {
             return ResponseEntity.notFound().build();
         }
@@ -49,4 +49,6 @@ public class UsuarioController {
         usuarioService.eliminar(id);
         return ResponseEntity.noContent().build();
     }
+
+
 }

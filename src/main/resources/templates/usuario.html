@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Administrar Usuarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<h1>Usuario</h1>
+<body class="bg-gray-100">
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold text-center mb-8">Administrar Usuarios</h1>
+    <a href="/usuarios/nuevo" class="bg-blue-500 text-white px-4 py-2 rounded-lg mb-4 inline-block">
+        Crear Nuevo Usuario
+    </a>
+    <table class="min-w-full bg-white rounded-lg overflow-hidden">
+        <thead class="bg-gray-800 text-white">
+        <tr>
+            <th class="px-4 py-2">ID</th>
+            <th class="px-4 py-2">Fecha de Nacimiento</th>
+            <th class="px-4 py-2">Activo</th>
+            <th class="px-4 py-2">Dependencia</th>
+            <th class="px-4 py-2">Perfil</th>
+            <th class="px-4 py-2">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="usuario : ${usuarios}" class="border-b">
+            <td class="px-4 py-2" th:text="${usuario.id}"></td>
+            <td class="px-4 py-2" th:text="${usuario.fechaNacimiento}"></td>
+            <td class="px-4 py-2" th:text="${usuario.activo} ? 'Sí' : 'No'"></td>
+            <td class="px-4 py-2" th:text="${usuario.dependencia}"></td>
+            <td class="px-4 py-2" th:text="${usuario.perfil}"></td>
+            <td class="px-4 py-2">
+                <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}" class="text-blue-500 hover:text-blue-700">Editar</a>
+                <a th:href="@{/usuarios/eliminar/{id}(id=${usuario.id})}" class="text-red-500 hover:text-red-700 ml-2">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
