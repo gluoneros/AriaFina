@@ -14,8 +14,11 @@ import java.util.Optional;
 @RequestMapping("/tareas")
 public class FilaController {
 
-    @Autowired
-    private TareaService tareaService;
+    private final TareaService tareaService;
+
+    public FilaController(TareaService tareaService) {
+        this.tareaService = tareaService;
+    }
 
     @GetMapping
     public List<Tarea> listarTareas() {
@@ -35,7 +38,7 @@ public class FilaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Tarea> actualizarTarea(@PathVariable Integer id, @Valid @RequestBody Tarea tarea) {
-        if (!tareaService.obtenerPorId(id).isPresent()) {
+        if (tareaService.obtenerPorId(id).isPresent()) {
             return ResponseEntity.notFound().build();
         }
         tarea.setId(id);
@@ -44,10 +47,11 @@ public class FilaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarTarea(@PathVariable Integer id) {
-        if (!tareaService.obtenerPorId(id).isPresent()) {
+        if (tareaService.obtenerPorId(id).isPresent()) {
+            tareaService.eliminar(id);
+            return ResponseEntity.noContent().build();
+        } else {
             return ResponseEntity.notFound().build();
         }
-        tareaService.eliminar(id);
-        return ResponseEntity.noContent().build();
     }
 }
