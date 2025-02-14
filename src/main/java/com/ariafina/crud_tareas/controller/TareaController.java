@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
+//import java.util.Optional;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -14,18 +14,17 @@ import org.springframework.http.HttpStatus;
 import com.ariafina.crud_tareas.model.Tarea;
 import com.ariafina.crud_tareas.service.TareaService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
+//import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @RequestMapping("/api/tareas")
 public class TareaController {
 
-    @Autowired
-    private TareaService tareaService;
+    private final TareaService tareaService;
+
+    public TareaController(TareaService tareaService) {
+        this.tareaService = tareaService;
+    }
 
     // Obtener todas las tareas
     @GetMapping
@@ -37,7 +36,7 @@ public class TareaController {
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerTareaPorId(@PathVariable Integer id) {
         return tareaService.obtenerPorId(id)
-                .map(tarea -> ResponseEntity.ok(tarea))
+                .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body((Tarea) Map.of("error", "No se encontró la tarea con ID " + id)));
     }
@@ -45,6 +44,27 @@ public class TareaController {
     // Crear una nueva tarea
     @PostMapping
     public ResponseEntity<?> crearTarea(@Valid @RequestBody Tarea tarea, BindingResult result) {
+        ResponseEntity<?> errores = getResponseEntity(result);
+        if (errores != null) return errores;
+        Tarea nuevaTarea = tareaService.guardar(tarea);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaTarea);
+    }
+
+    // Actualizar una tarea existente
+    @PutMapping("/{id}")
+    public ResponseEntity<?> actualizarTarea(@PathVariable Integer id, @Valid @RequestBody Tarea tarea, BindingResult result) {
+        ResponseEntity<?> errores = getResponseEntity(result);
+        if (errores != null) return errores;
+
+        try {
+            Tarea tareaActualizada = tareaService.actualizar(id, tarea);
+            return ResponseEntity.ok(tareaActualizada);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    private ResponseEntity<?> getResponseEntity(BindingResult result) {
         if (result.hasErrors()) {
             Map<String, String> errores = new HashMap<>();
             for (FieldError error : result.getFieldErrors()) {
@@ -52,15 +72,9 @@ public class TareaController {
             }
             return ResponseEntity.badRequest().body(errores);
         }
-        Tarea nuevaTarea = tareaService.guardar(tarea);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaTarea);
+        return null;
     }
 
-    // Actualizar una tarea existente
-    @PutMapping("/{id}")
-    public Tarea actualizarTarea(@PathVariable Integer id, @Valid @RequestBody Tarea tarea) {
-        return tareaService.actualizar(id, tarea);
-    }
 
     // Eliminar una tarea por ID
     @DeleteMapping("/{id}")
