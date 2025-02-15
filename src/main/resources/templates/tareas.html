@@ -1,56 +1,39 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Tareas</title>
-    <style>
-        table {
-            width: 50%;
-            margin: 20px auto;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid black;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        form {
-            text-align: center;
-            margin-top: 20px;
-        }
-        input, button {
-            padding: 10px;
-            margin: 5px;
-        }
-    </style>
+    <title>Gestión de Tareas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
-<body>
+<body class="p-8">
+<h1 class="text-2xl font-bold mb-4">Gestión de Tareas</h1>
 
-<h2 style="text-align: center;">Lista de Tareas</h2>
+<button class="bg-blue-500 text-white px-4 py-2 rounded" onclick="openTaskModal()">Añadir Nueva Tarea</button>
 
-<!-- Formulario para agregar tareas -->
-<form th:action="@{/tareas/crear}" method="post">
-    <input type="text" name="nombre" placeholder="Nombre de la tarea" required>
-    <button type="submit">Agregar Tarea</button>
-</form>
-
-<table>
+<table class="table-auto w-full mt-4 border-collapse border border-gray-300">
     <thead>
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
+    <tr class="bg-gray-200">
+        <th class="border border-gray-300 px-4 py-2">ID</th>
+        <th class="border border-gray-300 px-4 py-2">Nombre</th>
+        <th class="border border-gray-300 px-4 py-2">Duración</th>
+        <th class="border border-gray-300 px-4 py-2">Usuario Asociado</th>
+        <th class="border border-gray-300 px-4 py-2">Acciones</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="tarea : ${tareas}">
-        <td th:text="${tarea.id}"></td>
-        <td th:text="${tarea.nombre}"></td>
+        <td class="border border-gray-300 px-4 py-2" th:text="${tarea.id}"></td>
+        <td class="border border-gray-300 px-4 py-2" th:text="${tarea.nombre}"></td>
+        <td class="border border-gray-300 px-4 py-2" th:text="${tarea.duracion} + ' min'"></td>
+        <td class="border border-gray-300 px-4 py-2" th:text="${tarea.usuario.nombre}"></td>
+        <td class="border border-gray-300 px-4 py-2">
+            <button class="bg-yellow-500 text-white px-2 py-1 rounded" th:attr="onclick='editTask(' + ${tarea.id} + ')'">Editar</button>
+            <button class="bg-red-500 text-white px-2 py-1 rounded" th:attr="onclick='deleteTask(' + ${tarea.id} + ')'">Borrar</button>
+        </td>
     </tr>
     </tbody>
 </table>
+
 
 </body>
 </html>
