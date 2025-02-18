@@ -3,19 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <title>CRUD de Tareas</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-gray-100">
-<div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold text-center mb-8">CRUD Para administrar usuarios y Tareas</h1>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <a href="/usuarios" class="bg-blue-500 text-white p-4 rounded-lg text-center hover:bg-blue-700">
-            Administrar Usuarios
-        </a>
+<section class="pt-24 bg-white">
+    <div class="px-12 mx-auto max-w-7xl">
+        <div class="w-full mx-auto text-left md:w-11/12 xl:w-9/12 md:text-center">
+            <h1 class="mb-8 text-4xl font-extrabold leading-none tracking-normal text-gray-900 md:text-6xl md:tracking-tight">
+                <span>Gestor</span> <span class="block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-400 to-purple-500 lg:inline">de tareas </span> <span>de usuario</span>
+            </h1>
+            <p class="px-0 mb-8 text-lg text-gray-600 md:text-xl lg:px-24">
+                comienza a gestionar las tareas  de  Usuarios, asociando varias tareas a un usuario o varios usuarios a una tarea.
+            </p>
+        </div>
+    </div>
+</section>
 
-        <a href="/tareas" class="bg-purple-500 text-white p-4 rounded-lg text-center hover:bg-purple-700">
-            Administrar Tareas
-        </a>
+<div class="container mx-auto p-4">
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Tarjeta para Administrar Usuarios -->
+        <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div class="px-6 py-4">
+                <div class="font-bold text-xl mb-2 text-blue-500">Usuarios</div>
+                <p class="text-gray-700 text-base">
+                    Administra todos los usuarios del sistema.
+                </p>
+            </div>
+            <div class="px-6 pt-4 pb-2">
+                <a href="/usuarios" class="inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">
+                    Gestionar Usuarios
+                </a>
+            </div>
+        </div>
+
+        <!-- Tarjeta para Administrar Tareas -->
+        <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div class="px-6 py-4">
+                <div class="font-bold text-xl mb-2 text-purple-500">Tareas</div>
+                <p class="text-gray-700 text-base">
+                    Gestiona todas las tareas <registradas class=""></registradas>
+                </p>
+            </div>
+            <div class="px-6 pt-4 pb-2">
+                <a href="/tareas" class="inline-block bg-purple-500 text-white font-bold py-2 px-4 rounded hover:bg-purple-700">
+                    Gestionar Tareas
+                </a>
+            </div>
+        </div>
+
+        <!-- Tarjeta para Nueva Funcionalidad (Ejemplo: Estadísticas) -->
+        <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div class="px-6 py-4">
+                <div class="font-bold text-xl mb-2 text-green-500">Consulta</div>
+                <p class="text-gray-700 text-base">
+                    Consulta  usuarios y tareas.
+                </p>
+            </div>
+            <div class="px-6 pt-4 pb-2">
+                <a href="#" class="inline-block bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700">
+                    Ver Tareas y usuarios
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 </body>
