@@ -11,9 +11,8 @@
   <form th:action="${usuario.id} ? @{/usuarios/editar/{id}(id=${usuario.id})} : @{/usuarios/nuevo}" method="post" class="bg-white p-6 rounded-lg shadow-md">
     <div class="mb-4">
       <label class="block text-gray-700">Fecha de Nacimiento</label>
-      <input type="date" th:field="*{fechaNacimiento}" class="w-full px-3 py-2 border rounded-lg">
-    </div>
-    <div class="mb-4">
+      <input class="w-full px-3 py-2 border rounded-lg" th:field="*{fetch_nacimiento}">
+
       <label class="block text-gray-700">Activo</label>
       <input type="checkbox" th:field="*{activo}" class="mr-2">
     </div>
