@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
+@Table(name = "tarea")
 public class Tarea {
 
     @Id

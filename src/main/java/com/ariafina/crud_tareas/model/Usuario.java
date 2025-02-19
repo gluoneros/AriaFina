@@ -20,6 +20,15 @@ public class Usuario {
     @Column(name = "fecha_nacimiento", nullable = false)
     private Date fechaNacimiento;
 
+    @NotBlank(message = "El nombre no puede estar vacío")
+    @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
+    private String nombre;
+
+
+    public Usuario(String nombre) {
+        this.nombre = nombre;
+    }
+
     @Column(nullable = false)
     private Boolean activo;
 
@@ -39,8 +48,9 @@ public class Usuario {
     // Constructores
     public Usuario() {}
 
-    public Usuario(Date fechaNacimiento, Boolean activo, Dependencia dependencia, Perfil perfil) {
+    public Usuario(Date fechaNacimiento, String nombre, Boolean activo, Dependencia dependencia, Perfil perfil) {
         this.fechaNacimiento = fechaNacimiento;
+        this.nombre = nombre;
         this.activo = activo;
         this.dependencia = dependencia;
         this.perfil = perfil;
@@ -50,7 +60,6 @@ public class Usuario {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -58,15 +67,16 @@ public class Usuario {
     public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
-
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public String getNombre() {return nombre;}
+    public void setNombre(String nombre) {this.nombre = nombre;}
+
     public Boolean getActivo() {
         return activo;
     }
-
     public void setActivo(Boolean activo) {
         this.activo = activo;
     }
@@ -74,7 +84,6 @@ public class Usuario {
     public Dependencia getDependencia() {
         return dependencia;
     }
-
     public void setDependencia(Dependencia dependencia) {
         this.dependencia = dependencia;
     }
@@ -82,7 +91,6 @@ public class Usuario {
     public Perfil getPerfil() {
         return perfil;
     }
-
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
     }
@@ -90,7 +98,6 @@ public class Usuario {
     public List<Fila> getFilas() {
         return filas;
     }
-
     public void setFilas(List<Fila> filas) {
         this.filas = filas;
     }
