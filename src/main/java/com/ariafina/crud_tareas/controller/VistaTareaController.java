@@ -27,6 +27,6 @@ public class VistaTareaController {
     public String crearTarea(@RequestParam String nombre) {
         Tarea nuevaTarea = new Tarea(nombre);
         tareaService.guardar(nuevaTarea);
-        return "redirect:/tareas/vista";
+        return "tarea-form";
     }
 }
