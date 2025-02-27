@@ -7,6 +7,11 @@ import jakarta.validation.constraints.*;
 import java.util.Date;
 import java.util.List;
 
+
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
@@ -18,7 +23,8 @@ public class Usuario {
     @NotNull(message = "La fecha de nacimiento es obligatoria.")
     @Past(message = "La fecha de nacimiento debe ser en el pasado.")
     @Column(name = "fecha_nacimiento", nullable = false)
-    private Date fechaNacimiento;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public Date fechaNacimiento;
 
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")

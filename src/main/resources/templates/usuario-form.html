@@ -1,34 +1,87 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title th:text="${usuario.id} ? 'Editar Usuario' : 'Crear Usuario'"></title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+  <title th:text="${usuario.id != null} ? 'Editar Usuario' : 'Nuevo Usuario'"></title>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-gray-100">
-<div class="container mx-auto p-4">
-  <h1 class="text-3xl font-bold text-center mb-8" th:text="${usuario.id} ? 'Editar Usuario' : 'Crear Usuario'"></h1>
-  <form th:action="${usuario.id} ? @{/usuarios/editar/{id}(id=${usuario.id})} : @{/usuarios/nuevo}" method="post" class="bg-white p-6 rounded-lg shadow-md">
-    <div class="mb-4">
-      <label class="block text-gray-700">Fecha de Nacimiento</label>
-      <input class="w-full px-3 py-2 border rounded-lg" th:field="*{fetch_nacimiento}">
+<div class="container mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-6"
+      th:text="${usuario.id != null} ? 'Editar Usuario' : 'Crear Nuevo Usuario'"></h1>
 
-      <label class="block text-gray-700">Activo</label>
-      <input type="checkbox" th:field="*{activo}" class="mr-2">
-    </div>
+  <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post" class="bg-white p-6 rounded-lg shadow-md">
+    <!-- Campo oculto para el ID -->
+    <input type="hidden" th:field="*{id}">
+
+    <!-- Nombre -->
     <div class="mb-4">
-      <label class="block text-gray-700">Dependencia</label>
-      <select th:field="*{dependencia}" class="w-full px-3 py-2 border rounded-lg">
-        <option th:each="d : ${T(com.ariafina.crud_tareas.model.Dependencia).values()}" th:value="${d}" th:text="${d}"></option>
-      </select>
+      <label for="nombre" class="block text-gray-700 font-bold mb-2">Nombre:</label>
+      <input type="text" id="nombre" th:field="*{nombre}"
+             class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+             required>
+      <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"
+            class="text-red-500 text-sm"></span>
     </div>
+
+    <!-- Fecha de Nacimiento -->
     <div class="mb-4">
-      <label class="block text-gray-700">Perfil</label>
-      <select th:field="*{perfil}" class="w-full px-3 py-2 border rounded-lg">
-        <option th:each="p : ${T(com.ariafina.crud_tareas.model.Perfil).values()}" th:value="${p}" th:text="${p}"></option>
-      </select>
+      <label for="fechaNacimiento" class="block text-gray-700 font-bold mb-2">Fecha de Nacimiento:</label>
+      <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}"
+             class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+             required>
+      <span th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}"
+            class="text-red-500 text-sm"></span>
     </div>
-    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Guardar</button>
+
+    <!-- Activo -->
+    <div class="mb-4">
+      <label for="activo" class="block text-gray-700 font-bold mb-2">Activo:</label>
+      <input type="checkbox" id="activo" th:field="*{activo}"
+             class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+    </div>
+
+    <!-- Dependencia -->
+    <div class="mb-4">
+      <label for="dependencia" class="block text-gray-700 font-bold mb-2">Dependencia:</label>
+      <select id="dependencia" th:field="*{dependencia}"
+              class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required>
+        <option value="">Seleccione una dependencia</option>
+        <option th:each="dep : ${dependencias}"
+                th:value="${dep}"
+                th:text="${dep}"></option>
+      </select>
+      <span th:if="${#fields.hasErrors('dependencia')}" th:errors="*{dependencia}"
+            class="text-red-500 text-sm"></span>
+    </div>
+
+    <!-- Perfil -->
+    <div class="mb-4">
+      <label for="perfil" class="block text-gray-700 font-bold mb-2">Perfil:</label>
+      <select id="perfil" th:field="*{perfil}"
+              class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required>
+        <option value="">Seleccione un perfil</option>
+        <option th:each="perf : ${perfiles}"
+                th:value="${perf}"
+                th:text="${perf}"></option>
+      </select>
+      <span th:if="${#fields.hasErrors('perfil')}" th:errors="*{perfil}"
+            class="text-red-500 text-sm"></span>
+    </div>
+
+    <!-- Botones -->
+    <div class="flex space-x-4">
+      <button type="submit"
+              class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+        Guardar
+      </button>
+      <a th:href="@{/usuarios}"
+         class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
+        Cancelar
+      </a>
+    </div>
   </form>
 </div>
 </body>
