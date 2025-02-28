@@ -1,22 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <meta charset="UTF-8">
     <title>Gestión de Tareas</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
-<body class="p-8">
-<h1 class="text-2xl font-bold mb-4">Gestión de Tareas</h1>
+<body class="bg-gray-100">
+<h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Administrar tareass</h1>
 
-<button class="bg-blue-500 text-white px-4 py-2 rounded" onclick="openTaskModal()">Añadir Nueva Tarea</button>
+<div class=" flex items-center justify-between pb-6">
+    <div class="flex items-center justify-between">
+        <div class="flex bg-gray-50 items-center p-2 rounded-md">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+                 fill="currentColor">
+                <path fill-rule="evenodd"
+                      d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                      clip-rule="evenodd" />
+            </svg>
+            <input class="bg-gray-50 outline-none ml-1 block " type="text" name="" id="" placeholder="search...">
+        </div>
+        <div class="lg:ml-40 ml-10 space-x-8">
+            <a href="/tareas/nuevo" class="bg-blue-500 text-white px-4 py-2 rounded-lg mb-4 inline-block">
+                Crear Nuevo Usuario
+            </a>
+        </div>
+    </div>
+</div>
 
 <table class="table-auto w-full mt-4 border-collapse border border-gray-300">
     <thead>
     <tr class="bg-gray-200">
         <th class="border border-gray-300 px-4 py-2">ID</th>
         <th class="border border-gray-300 px-4 py-2">Nombre</th>
-        <th class="border border-gray-300 px-4 py-2">Duración</th>
-        <th class="border border-gray-300 px-4 py-2">Usuario Asociado</th>
         <th class="border border-gray-300 px-4 py-2">Acciones</th>
     </tr>
     </thead>
@@ -24,8 +38,6 @@
     <tr th:each="tarea : ${tareas}">
         <td class="border border-gray-300 px-4 py-2" th:text="${tarea.id}"></td>
         <td class="border border-gray-300 px-4 py-2" th:text="${tarea.nombre}"></td>
-        <td class="border border-gray-300 px-4 py-2" th:text="${tarea.duracion} + ' min'"></td>
-        <td class="border border-gray-300 px-4 py-2" th:text="${tarea.usuario.nombre}"></td>
         <td class="border border-gray-300 px-4 py-2">
             <button class="bg-yellow-500 text-white px-2 py-1 rounded" th:attr="onclick='editTask(' + ${tarea.id} + ')'">Editar</button>
             <button class="bg-red-500 text-white px-2 py-1 rounded" th:attr="onclick='deleteTask(' + ${tarea.id} + ')'">Borrar</button>
@@ -33,7 +45,6 @@
     </tr>
     </tbody>
 </table>
-
 
 </body>
 </html>

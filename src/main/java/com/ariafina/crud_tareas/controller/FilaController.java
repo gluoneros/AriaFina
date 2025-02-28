@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/tareas")
+@RequestMapping("/api/filas")
 public class FilaController {
 
     private final TareaService tareaService;
