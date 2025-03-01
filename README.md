@@ -49,3 +49,15 @@ Sigue estos pasos para poner en marcha el proyecto en tu máquina local:
 ```bash
 git clone https://github.com/tu-usuario/ariafina.git
 cd ariafina
+
+spring.datasource.url=jdbc:mysql://localhost:3306/ariafina
+spring.datasource.username=tu_usuario
+spring.datasource.password=tu_contraseña
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+mvn clean install
+
+mvn spring-boot:run
+
+http://localhost:8080/
