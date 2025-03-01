@@ -62,7 +62,7 @@ public class VistaTareaController {
     @GetMapping("/eliminar/{id}")
     public String eliminarTarea(@PathVariable Integer id) {
         tareaService.eliminar(id);
-        return "redirect:/usuarios"; // Redirigir a la lista después de eliminar
+        return "redirect:/tareas"; // Redirigir a la lista después de eliminar
     }
 
 }

@@ -36,7 +36,6 @@ public class Fila {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -44,7 +43,6 @@ public class Fila {
     public Integer getTarea() {
         return tarea;
     }
-
     public void setTarea(Integer tarea) {
         this.tarea = tarea;
     }
@@ -52,7 +50,6 @@ public class Fila {
     public Integer getDuracion() {
         return duracion;
     }
-
     public void setDuracion(Integer duracion) {
         this.duracion = duracion;
     }
@@ -60,7 +57,6 @@ public class Fila {
     public Usuario getUsuario() {
         return usuario;
     }
-
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }

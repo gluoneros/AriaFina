@@ -30,13 +30,15 @@
       </div>
     </div>
   </nav>
+
   <div class="container mx-auto p-6">
     <h1 class="text-3xl font-bold mb-6"
         th:text="${tarea.id != null} ? 'Editar Tarea' : 'Crear Nueva Tarea'"></h1>
 
 
     <!-- Formulario para agregar nueva tarea -->
-    <form th:action="@{/tareas/guardar}" method="post" th:object="${tarea}" class="bg-white p-6 rounded-lg shadow-md">
+    <form th:action="@{/tareas/guardar}" th:object="${tarea}" method="post" class="bg-white p-6 rounded-lg shadow-md">
+      <input type="hidden" th:field="*{id}">
 
       <!-- Nombre tarea -->
       <div class="mb-4">
@@ -52,7 +54,7 @@
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
           Guardar
         </button>
-        <a th:href="@{/usuarios}"
+        <a th:href="@{/tareas}"
            class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
           Cancelar
         </a>
